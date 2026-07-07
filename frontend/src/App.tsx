@@ -1,7 +1,6 @@
 import './App.css'
 
-/* Qoshqar-müyiz (ram's horn) — the steppe ornament, our signature motif.
-   One tile, repeated across a band or scaled up as a faint watermark. */
+/* Qoshqar-müyiz (ram's horn) — the steppe ornament, our national signature. */
 function OrnamentTile() {
   return (
     <g
@@ -19,34 +18,26 @@ function OrnamentTile() {
   )
 }
 
-function SteppeBand({ id }: { id: string }) {
+function SteppeBand() {
   return (
-    <div className="band band--sep" aria-hidden="true">
+    <div className="band" aria-hidden="true">
       <div className="wrap">
-        <svg width="100%" height="28" role="presentation">
+        <svg width="100%" height="24" role="presentation">
           <defs>
             <pattern
-              id={id}
+              id="steppe"
               width="120"
-              height="28"
+              height="24"
               patternUnits="userSpaceOnUse"
-              patternTransform="translate(0 -6)"
+              patternTransform="translate(0 -8)"
             >
               <OrnamentTile />
             </pattern>
           </defs>
-          <rect width="100%" height="28" fill={`url(#${id})`} />
+          <rect width="100%" height="24" fill="url(#steppe)" />
         </svg>
       </div>
     </div>
-  )
-}
-
-function Ornament({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 120 40" role="presentation" aria-hidden="true">
-      <OrnamentTile />
-    </svg>
   )
 }
 
@@ -60,42 +51,21 @@ function Mark() {
 
 const arrow = <span className="arrow" aria-hidden="true">→</span>
 
-const subjects = [
-  {
-    title: 'Математика',
-    status: 'live' as const,
-    tag: 'Қолжетімді',
-    desc: 'Алгебра мен геометриядан бастап тригонометрияға дейін — әр курс бөлімдерге, тақырыптарға және үй жұмыстарына бөлінген.',
-  },
-  {
-    title: 'Физика',
-    status: 'soon' as const,
-    tag: 'Жақында',
-    desc: 'Механика, электр және оптика. Теорияны есеп шығарумен бекітіп, әр бөлім соңында тест тапсырасың.',
-  },
-  {
-    title: 'Информатика',
-    status: 'soon' as const,
-    tag: 'Жақында',
-    desc: 'Алгоритмдер мен Python негіздері. Тапсырмаларды браузерде орындап, бірден кері байланыс аласың.',
-  },
-]
-
 const steps = [
   {
     n: '01',
-    t: 'Пәнді таңда',
-    p: 'Математика сияқты пәнді ашып, өзіңе керек курсты таңдайсың. Барлығы қазақ тілінде.',
+    t: 'Наставник назначает',
+    p: 'Ваш наставник подбирает курс и разделы под ваш уровень и цели и открывает их вам.',
   },
   {
     n: '02',
-    t: 'Бөлімдерден өт',
-    p: 'Әр курс бөлімдер мен тақырыптарға бөлінген. Реті бойынша, өз қарқыныңмен оқисың.',
+    t: 'Вы проходите материал',
+    p: 'Открываете назначенные темы и разбираетесь в них — по плану наставника, с поддержкой на каждом шаге.',
   },
   {
     n: '03',
-    t: 'Тапсырып бекіт',
-    p: 'Әр тақырыпта үй жұмысы, әр бөлім соңында тест. Осылай білімің нақты бекиді.',
+    t: 'Задания и проверка',
+    p: 'Выполняете домашние работы и тесты по разделу. Наставник проверяет их и помогает разобрать ошибки.',
   },
 ]
 
@@ -104,23 +74,21 @@ function App() {
     <>
       <header className="nav">
         <div className="wrap nav__row">
-          <a className="brand" href="#top" aria-label="Ұлы Дала — басты бет">
+          <a className="brand" href="#top" aria-label="Ұлы Дала — главная">
             <Mark />
             Ұлы&nbsp;Дала
           </a>
-          <nav aria-label="Негізгі">
+          <nav aria-label="Основная навигация">
             <ul className="nav__links">
-              <li><a href="#subjects">Пәндер</a></li>
-              <li><a href="#how">Қалай оқимыз</a></li>
-              <li><a href="#subjects">Курстар</a></li>
-              <li><a href="#foot">Байланыс</a></li>
+              <li><a href="#how">Как это устроено</a></li>
+              <li><a href="#foot">Контакты</a></li>
             </ul>
           </nav>
           <div className="nav__right">
-            <div className="lang" aria-label="Тіл">
-              <b>KZ</b><span>·</span>RU<span>·</span>EN
+            <div className="lang" aria-label="Язык">
+              <b>RU</b>KZ<span>·</span>EN
             </div>
-            <a className="btn btn--dark" href="#top">Тегін бастау</a>
+            <a className="btn btn--dark" href="#top">Войти</a>
           </div>
         </div>
       </header>
@@ -128,91 +96,67 @@ function App() {
       <main id="top">
         <section className="hero">
           <div className="wrap hero__grid">
-            <div className="hero__panel rise">
-              <Ornament className="hero__watermark" />
-              <span className="pill">Тіркеу ашық · 2026 көктем</span>
+            <div className="hero__copy rise">
+              <span className="pill">Обучение с наставником</span>
               <h1 className="hero__title">
-                Ұлы Дала
-                <em>білімнің кең даласы</em>
+                Личный наставник ведёт вас <em>по программе</em>
               </h1>
               <p className="hero__lead">
-                Қазақша онлайн академия. Пәнді таңдап, курс бөлімдерін өз
-                қарқыныңмен оқисың — тапсырмалар мен тесттер білімді нақты бекітеді.
+                Ұлы Дала — помощник в учёбе. Наставник назначает курсы и задания,
+                а вы проходите их шаг за шагом и всегда можете спросить, если что-то
+                непонятно.
               </p>
               <div className="hero__cta">
-                <a className="btn btn--dark" href="#subjects">
-                  Оқуды бастау {arrow}
+                <a className="btn btn--dark" href="#top">Войти</a>
+                <a className="btn btn--text" href="#how">
+                  Как это устроено {arrow}
                 </a>
-                <div className="hero__stats">
-                  <div><b>6</b> пән</div>
-                  <div><b>20+</b> курс</div>
-                  <div><b>3&nbsp;200</b> оқушы</div>
-                </div>
               </div>
             </div>
 
-            <div className="map rise rise-2" aria-label="Курс құрылымының үлгісі">
-              <div className="map__head">
-                <span>Курс құрылымы</span>
-                <span>Математика</span>
+            <div className="assign rise rise-2" aria-label="Задание от наставника">
+              <div className="assign__head">
+                <span>От наставника</span>
+                <span className="assign__day">Сегодня</span>
               </div>
-              <div className="node">
-                <div className="node__k">Курс</div>
-                <div className="node__v">Тригонометрия</div>
-              </div>
-              <div className="branch" />
-              <div className="node node--indent">
-                <div className="node__k">Бөлім</div>
-                <div className="node__v">Тік бұрышты үшбұрыш</div>
-              </div>
-              <div className="branch branch--deep" />
-              <div className="node node--i2 node--leaf">
-                <div className="node__k">Тақырыптар</div>
-                <div className="node__v">Пифагор теоремасы</div>
-                <div className="node__v">Синус · косинус · тангенс</div>
-                <div className="chips">
-                  <span className="chip">Үй жұмысы</span>
-                  <span className="chip chip--soft">Бөлім тесті</span>
+              <div className="tutor">
+                <div className="tutor__ava" aria-hidden="true">А</div>
+                <div>
+                  <div className="tutor__name">Айгерім А.</div>
+                  <div className="tutor__role">Наставник по математике</div>
                 </div>
+              </div>
+              <div className="rows">
+                <div className="row">
+                  <span className="row__k">Курс</span>
+                  <span className="row__v">Тригонометрия</span>
+                </div>
+                <div className="row">
+                  <span className="row__k">Раздел</span>
+                  <span className="row__v">Прямоугольный треугольник</span>
+                </div>
+                <div className="row">
+                  <span className="row__k">Задание</span>
+                  <span className="row__v">Теорема Пифагора</span>
+                </div>
+              </div>
+              <div className="chips">
+                <span className="chip">Назначено</span>
+                <span className="chip chip--soft">Срок: 12 апреля</span>
               </div>
             </div>
           </div>
         </section>
 
-        <SteppeBand id="band-1" />
+        <SteppeBand />
 
-        <section className="section" id="subjects">
+        <section className="how" id="how">
           <div className="wrap">
-            <div className="section__head">
-              <h2 className="section__title">Оқу пәндері</h2>
-              <p className="section__note">
-                Әр пән курстарға, курс бөлімдер мен тақырыптарға бөлінеді —
-                қарапайымнан күрделіге қарай.
-              </p>
-            </div>
-            <div className="cards">
-              {subjects.map((s) => (
-                <article className="card" key={s.title}>
-                  <div className="card__top">
-                    <h3 className="card__title">{s.title}</h3>
-                    <span className={`tag tag--${s.status}`}>{s.tag}</span>
-                  </div>
-                  <p className="card__desc">{s.desc}</p>
-                  <a className="card__link" href="#top">
-                    Толығырақ {arrow}
-                  </a>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--alt" id="how">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 className="section__title">Оқу қалай өтеді?</h2>
-              <p className="section__note">
-                Үш қадам — таңдаудан бастап білімді бекітуге дейін.
+            <div className="how__head">
+              <h2>Как это устроено</h2>
+              <p>
+                Это не самостоятельный курс, а работа с наставником: он ведёт вас
+                по программе, а платформа помогает не потерять нить.
               </p>
             </div>
             <div className="steps">
@@ -226,62 +170,19 @@ function App() {
             </div>
           </div>
         </section>
-
-        <SteppeBand id="band-2" />
-
-        <section className="cta">
-          <div className="wrap">
-            <div className="cta__box">
-              <Ornament className="cta__watermark" />
-              <h2>Бүгін оқуды бастаңыз</h2>
-              <a className="btn btn--dark" href="#top">
-                Тегін тіркелу {arrow}
-              </a>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="foot" id="foot">
         <div className="wrap">
-          <div className="foot__grid">
-            <div>
-              <span className="brand"><Mark /> Ұлы&nbsp;Дала</span>
-              <p className="foot__tag">
-                Ұлы Даланың цифрлық академиясы — қазақ тіліндегі ашық білім алаңы.
-              </p>
-            </div>
-            <div>
-              <h4>Оқу</h4>
-              <ul>
-                <li><a href="#subjects">Математика</a></li>
-                <li><a href="#subjects">Физика</a></li>
-                <li><a href="#subjects">Информатика</a></li>
-                <li><a href="#how">Қалай оқимыз</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Академия</h4>
-              <ul>
-                <li><a href="#top">Біз туралы</a></li>
-                <li><a href="#top">Ұстаздар</a></li>
-                <li><a href="#top">Блог</a></li>
-                <li><a href="#top">Байланыс</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Байланыс</h4>
-              <ul>
-                <li><a href="mailto:hello@ulydala.kz">hello@ulydala.kz</a></li>
-                <li><a href="#top">Instagram</a></li>
-                <li><a href="#top">Telegram</a></li>
-              </ul>
-            </div>
+          <div className="foot__row">
+            <span className="brand"><Mark /> Ұлы&nbsp;Дала</span>
+            <ul className="foot__links">
+              <li><a href="#how">Как это устроено</a></li>
+              <li><a href="#top">Войти</a></li>
+              <li><a href="mailto:hello@ulydala.kz">hello@ulydala.kz</a></li>
+            </ul>
           </div>
-          <div className="foot__base">
-            <span>© 2026 Ұлы Дала. Қазақстанда жасалды.</span>
-            <span>Құпиялылық · Шарттар</span>
-          </div>
+          <div className="foot__base">© 2026 Ұлы Дала. Сделано в Казахстане.</div>
         </div>
       </footer>
     </>
