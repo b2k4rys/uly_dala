@@ -28,3 +28,29 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+class ParentStudent(models.Model):
+    parent = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='children_links',
+        limit_choices_to={'role': User.Role.PARENT}
+    )
+    student = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='parents_links',
+        limit_choices_to={'role': User.Role.STUDENT}
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["parent", "student"], name="unique_parent_student"
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.parent} → {self.student}"
