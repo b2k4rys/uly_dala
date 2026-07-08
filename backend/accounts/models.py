@@ -8,9 +8,23 @@ class User(AbstractUser):
     Extends Django's AbstractUser so we keep username/password/permissions
     while being able to add project-specific fields over time. Defining this
     now (before the first migration) avoids a painful swap later.
+
+    ``role`` is the single source of truth for what kind of user this is. It
+    is deliberately one-per-user and app-level: it drives API permissions and
+    frontend routing, and stays decoupled from Django's is_staff/is_superuser
+    (so the ADMIN role and Django-admin-site access evolve independently).
+    Role-specific data (a parent's children, a teacher's courses) belongs in
+    separate OneToOne profile models added when those relationships are real.
     """
 
+    class Role(models.TextChoices):
+        STUDENT = "student", "Student"
+        TEACHER = "teacher", "Teacher"
+        PARENT = "parent", "Parent"
+        ADMIN = "admin", "Admin"
+
     email = models.EmailField(unique=True)
+    role = models.CharField(max_length=20, choices=Role.choices)
 
     def __str__(self):
         return self.username
