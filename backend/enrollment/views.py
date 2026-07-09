@@ -25,8 +25,25 @@ from .serializers import EnrollStudentSerializer, GroupSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        """Scope visible groups to the requester's relationship to them.
+
+        admin    every group
+        teacher  groups they teach
+        student  groups they're enrolled in
+        parent   groups their children are enrolled in
+        """
+        user = self.request.user
+        qs = Group.objects.all()
+        if user.role == User.Role.TEACHER:
+            return qs.filter(teacher=user)
+        if user.role == User.Role.STUDENT:
+            return qs.filter(students=user)
+        if user.role == User.Role.PARENT:
+            return qs.filter(students__parents_links__parent=user).distinct()
+        return qs  # admin
 
     def get_permissions(self):
         if self.action in ('list', 'retrieve'):
