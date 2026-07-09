@@ -5,7 +5,13 @@ const API = '/api'
 const ACCESS_KEY = 'uly_access'
 const REFRESH_KEY = 'uly_refresh'
 
-export type User = { id: number; username: string; email: string }
+export type Role = 'student' | 'teacher' | 'parent' | 'admin'
+export type User = {
+  id: number
+  username: string
+  email: string
+  role: Role
+}
 
 export const tokens = {
   get access() {
@@ -54,7 +60,7 @@ const RU: Record<string, string> = {
 }
 const tr = (m: string) => RU[m] ?? m
 
-async function throwFromResponse(res: Response): Promise<never> {
+export async function throwFromResponse(res: Response): Promise<never> {
   let data: unknown = null
   try {
     data = await res.json()

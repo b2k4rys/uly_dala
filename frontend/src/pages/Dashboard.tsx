@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 import { Mark } from '../components/brand'
 import './Auth.css'
@@ -43,6 +43,10 @@ export default function Dashboard() {
             <span className="row__v">{user?.email || '—'}</span>
           </div>
         </div>
+
+        <Link to="/app/groups" className="btn btn--dark dash__cta">
+          Перейти к группам
+        </Link>
       </main>
     </div>
   )

@@ -3,6 +3,8 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Groups from './pages/Groups'
+import GroupDetail from './pages/GroupDetail'
 import ProtectedRoute from './auth/ProtectedRoute'
 
 export default function App() {
@@ -16,6 +18,22 @@ export default function App() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/app/groups"
+        element={
+          <ProtectedRoute>
+            <Groups />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/app/groups/:id"
+        element={
+          <ProtectedRoute>
+            <GroupDetail />
           </ProtectedRoute>
         }
       />
