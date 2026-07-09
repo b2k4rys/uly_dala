@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     # Local apps
     'accounts',
     'curriculum',
-    'groups',
+    'enrollment',
 ]
 
 MIDDLEWARE = [

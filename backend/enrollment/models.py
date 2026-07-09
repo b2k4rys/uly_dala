@@ -26,7 +26,7 @@ class Group(models.Model):
     )
     students = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name="groups",
+        related_name="student_groups",
         limit_choices_to={"role": User.Role.STUDENT},
         blank=True,
     )
